@@ -7,41 +7,29 @@ class PlaneGame():
     def __init__(self):
         print("Game Initialization")
         pygame.init()
-        # 1. set up the game window
         self.screen = pygame.display.set_mode(SCREEN_RECT.size)
-        # 2. create a game clock
         self.clock = pygame.time.Clock()
-        # 3. initialize sprites and sprite groups by calling the private method
         self.__create_sprites()
-        # 4. set timer event - create enemies
         pygame.time.set_timer(CREATE_ENEMY_EVENT,1000)
         pygame.time.set_timer(HERO_FIRE_EVENT,500)
 
     def __create_sprites(self):
-        # create background sprite and corresponding group
         bg1 = Background()
         bg2 = Background(True)
         self.background_group = pygame.sprite.Group(bg1,bg2)
 
-        # create enemy sprite group
         self.enemy_group = pygame.sprite.Group()
 
-        # create hero sprite and corresponding group
         self.hero = Hero()
         self.hero_group = pygame.sprite.Group(self.hero)
 
     def start_game(self):
         print("Game Starts")
         while True:
-            # 1. set the frame rate
             self.clock.tick(FRAME_RATE)
-            # 2. listen to the events
             self.__event_handler()
-            # 3. check for collision
             self.__check_collision()
-            # 4. update and draw the sprite group
             self.__update_sprites()
-            # 5. update/show the screen
             pygame.display.update()
             pass
     
@@ -52,8 +40,7 @@ class PlaneGame():
             elif event.type == CREATE_ENEMY_EVENT:
                 enemy = Enemy()
                 self.enemy_group.add(enemy)
-            # elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-            #     print("Moving right")
+
             elif event.type == HERO_FIRE_EVENT:
                 self.hero.fire()
         
